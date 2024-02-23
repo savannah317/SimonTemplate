@@ -14,16 +14,36 @@ namespace SimonSays
 {
     public partial class Form1 : Form
     {
-        //TODO: create a List to store the pattern. Must be accessable on other screens
+        //create a list to store the pattern
+        public static List<int> patternList = new List<int>();
+
+        public static int gameMode = 0;
 
         public Form1()
         {
             InitializeComponent();
+            MenuScreen menuScreen = new MenuScreen();
+            this.Controls.Add(menuScreen);
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        public static void ChangeScreen(object sender, UserControl next)
         {
-            //TODO: Launch MenuScreen
+        //Launch MenuScreen
+        Form f; 
+
+        if (sender is Form)
+        {
+            f = (Form)sender;
         }
+        else
+        {
+            UserControl current = (UserControl)sender;
+            f = current.FindForm();
+            f.Controls.Remove(current);
+        }
+        next.Location = new Point((f.ClientSize.Width - next.Width) / 2, (f.ClientSize.Height - next.Height) / 2);
+        f.Controls.Add(next);
+        }
+        
     }
 }
